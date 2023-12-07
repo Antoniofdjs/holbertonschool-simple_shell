@@ -20,7 +20,7 @@ int main ()
 		{
 			if (str_line[read_bytes - 1] == '\n')
 			{
-				str_line[read_bytes - 1] = '\0';
+				str_line[read_bytes - 1] = '\0'; /* removed \n with \0 */
 				read_bytes--;
 			}
 
