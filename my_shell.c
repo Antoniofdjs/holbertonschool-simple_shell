@@ -18,11 +18,18 @@ int main ()
 			write(STDOUT_FILENO, "ERROR\n", 6);
 		else
 		{
-			write(STDOUT_FILENO, "COMMAND ENTERED: ", 17);
-			write(STDOUT_FILENO, str_line, read_bytes);
-			
+			if (str_line[read_bytes - 1] == '\n')
+			{
+				str_line[read_bytes - 1] = '\0';
+				read_bytes--;
+			}
+
+			printf("COMMAND ENTERED: ");
+			printf("%s\n", str_line);
+
+
 		}
-		if (strcmp(str_line, "Exit\n") == 0)
+		if (strcmp(str_line, "Exit") == 0)
 			on = 0;
 	}
 	free(str_line);
