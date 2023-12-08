@@ -17,7 +17,10 @@ int main ()
 		read_bytes = getline(&str_line, &len, stdin); /* stdin into str_line */
 
 		if(read_bytes == -1)
-			write(STDOUT_FILENO, "ERROR\n", 6);
+		{
+			printf("\n");
+			on = 0;
+		}
 		else
 		{
 			if (str_line[read_bytes - 1] == '\n')
