@@ -1,22 +1,20 @@
 #include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
+#include <sys/stat.h>
+#include "main.h"
 int main ()
 {
 	char *str_line = NULL;
 	size_t len = 0;
 	ssize_t read_bytes;
-	int on = 1, tok_count = 0, i;
-	char *args[20];
-	char *token;
+	int on = 1, i = 0;
+	char **args;
 
 	while (on != 0)
 	{
 		printf("($) ");
 		read_bytes = getline(&str_line, &len, stdin); /* stdin into str_line */
 
-		if(read_bytes == -1)
+		if(read_bytes == -1) /* check if getline is succesfull */
 		{
 			printf("\n");
 			on = 0;
@@ -29,26 +27,29 @@ int main ()
 				read_bytes--; /* -1 to the old \n byte count */
 			}
 
-			if (strcmp(str_line, "Exit") == 0)
+			if (strcmp(str_line, "Exit") == 0) /* check if user put Exit */
 				on = 0;
 			else
 			{
-				token = strtok(str_line, " "); /* make tokens */
-				tok_count = 0;
-				while (token != NULL)
+				args = get_tokens(str_line); /* makes tokens and args array with mallocs */
+
+				if (args[0] != NULL) /* Adding the stat command to take file info to send to execve*/
 				{
-					args[tok_count] = strdup(token); /* dup tokens into args */
-					tok_count++;
-					token = strtok(NULL, " "); /* next token */
+				struct stat file_stat;
+
+					if (stat(args[0], &file_stat) == -1)
+					{
+						perror("stat");
+					}
 				}
-				for (i = 0; i < tok_count; i++)/* print tokens */
-				{
-					printf("%s\n", args[i]);
+				execve(args[0], args, NULL);
+				
+				for (i = 0; args[i] != NULL; i++) /* free the array and indxs */
 					free(args[i]);
-				}
+				free(args);
 			}
 		}
 	}
-	free(str_line);
+	free(str_line);/* always free the str_line form stdin */
 	return (0);
 }
