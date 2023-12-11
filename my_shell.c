@@ -10,6 +10,7 @@ int main ()
 	ssize_t read_bytes;
 	int on = 1, i = 0;
 	char **args;
+	char path[][30] = {"/usr/local/bin/", "/usr/bin/", "/bin/", "/usr/local/games/", "/usr/games/"};
 
 	if (!isatty(fileno(stdin))) /* non-interactive mode */
 	{
@@ -53,32 +54,52 @@ int main ()
 						printf("-bash: %s: command not found\n",args[0]);
 					else
 					{
-						pid_t pid;
-						pid = fork();
-						
-						if (pid == -1)/* child wasn't process and it couldn't work */
+						for (i = 0; path[i] != NULL; i++) /*iterate through path and concatenate with args[0]*/
 						{
-							perror("fork");
-							exit(EXIT_FAILURE);
-						}
-						if (pid == 0)/* child process is the current process in work */
-						{
-							execve(args[0], args, environ);
-							perror("execve");
-							exit(EXIT_FAILURE);
-						}
-						else
-						{
-							wait(NULL);/* parent process suspended until the child finishes */
+							char *full_path = malloc(strlen(path[i]) + strlen(args[0]) + 2); /* allocate memory */
+
+							if (full_path == NULL) /* verify if malloc is succesful */
+							{
+								perror("Memory allocation error");
+								exit(EXIT_FAILURE);
+							}
+							if (access(full_path, X_OK) == 0) /* verify if path is executable */
+							{
+								free(args[0]); /* execute command with full path */
+								args[0] = full_path;
+								break;
+							}
+							free(full_path); /* free memory for constructed path */
 						}
 					}
-
-					for (i = 0; args[i] != NULL; i++) /* free the array and indxs */
-						free(args[i]);
-					free(args);
 				}
+				else /* function call for fork */
+				{
+					pid_t pid;
+					pid = fork();
+
+					if (pid == -1)/* child wasn't process and it couldn't work */
+					{
+						perror("fork");
+						exit(EXIT_FAILURE);
+					}
+					if (pid == 0)/* child process is the current process in work */
+					{
+						execve(args[0], args, environ);
+						perror("execve");
+						exit(EXIT_FAILURE);
+					}
+					else
+					{
+						wait(NULL);/* parent process suspended until the child finishes */
+					}
+				}
+
+				for (i = 0; args[i] != NULL; i++) /* free the array and indxs */
+					free(args[i]);
+				free(args);
 			}
 		}
-	free(str_line);/* always free the str_line form stdin */
-	return (0);
+free(str_line);/* always free the str_line form stdin */
+return (0);
 }
