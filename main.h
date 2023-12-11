@@ -4,5 +4,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
 char **get_tokens(char *str_line);
 #endif
