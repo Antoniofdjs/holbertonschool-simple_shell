@@ -65,7 +65,8 @@ int main ()
 							}
 							if (access(full_path, X_OK) == 0) /* verify if path is executable */
 							{
-								free(args[0]); /* execute command with full path */
+								my_exe(args, environ);
+								free(full_path); /* execute command with full path */
 								args[0] = full_path;
 								break;
 							}
