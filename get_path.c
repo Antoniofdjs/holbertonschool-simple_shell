@@ -1,6 +1,12 @@
 #include "main.h"
 #include <stdio.h>
 
+/**
+ * get_path - pairs args[0] with possible paths
+ * @args : array from tokenization of get_tokens of str_line
+ * @environ : golbal variable from system
+ */
+
 void get_path(char **args, char **environ)
 {
 	char path[][30] = {"/usr/local/bin/", "/usr/bin/", "/bin/", "/usr/local/games/", "/usr/games/"};

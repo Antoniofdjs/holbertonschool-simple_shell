@@ -1,5 +1,10 @@
 #include "main.h"
 #include <stdio.h>
+/**
+ * my_exe - function for fork proccess
+ * @args: array from get_tokens
+ * @environ: global variable of system.
+ */
 
 void my_exe(char **args, char **environ)
 {
