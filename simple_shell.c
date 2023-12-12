@@ -15,7 +15,7 @@ int main ()
 	{
 		while((read_bytes = getline(&str_line, &len, stdin)) != -1) /* stdin into str_line */
 		{
-			remove_newline(&str_line, &read_bytes);
+			remove_newline(&str_line, &read_bytes); /* removes newline */
 			if (strcmp(str_line, "exit") == 0) /* check if user put Exit */
 				on = 0;
 			else
