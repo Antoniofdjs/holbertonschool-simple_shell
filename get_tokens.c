@@ -1,5 +1,9 @@
 #include "main.h"
 #include <stdio.h>
+/**
+ * get_tokens - gets tokens for array
+ * @str_line: string used to duplicate and allocate in array
+ */
 
 char **get_tokens(char *str_line)
 {
