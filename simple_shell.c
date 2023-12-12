@@ -8,7 +8,7 @@ int main ()
 	char *str_line = NULL;
 	size_t len = 0;
 	ssize_t read_bytes;
-	int on = 1, i = 0;
+	int on = 1, i = 0, spaces;
 	char **args;
 
 	if (!isatty(fileno(stdin))) /* non-interactive mode */
@@ -22,8 +22,25 @@ int main ()
 			else
 			{
 				args = get_tokens(str_line); /* makes tokens and args array with mallocs */
+				if (args[0] == NULL)/* args might be whte spaces only */
+				{
+					free(str_line);
+					free(args);
+					return (1);
+				}
 				if (access(args[0], X_OK) != 0) /* finds if file is excutable */
-					printf("-bash: %s: command not found\n",args[0]);
+				{
+					for (i = 0; args[0][i] != '\0'; i++)
+					{
+						if(args[0][i] != ' ')
+						{
+							spaces = 0;
+							break;	
+						}
+					}
+					if (spaces == 0)
+						printf("-bash: %s: command not found\n",args[0]);
+				}
 				else
 					my_exe(args, environ);
 
@@ -53,8 +70,16 @@ int main ()
 				else
 				{
 					args = get_tokens(str_line); /* makes tokens and args array with mallocs */
+					if (args[0] == NULL) /* if args was null maybe white spaces only */
+					{
+						free(str_line);
+						free(args);
+						return (main());
+					}
 					if (access(args[0], X_OK) != 0) /* finds if file is excutable */
-						printf("-bash: %s: command not found\n",args[0]);
+					{
+						printf("not found command\n");
+					}
 					else
 						my_exe(args, environ);
 
