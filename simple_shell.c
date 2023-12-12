@@ -26,7 +26,7 @@ int main ()
 				{
 					free(str_line);
 					free(args);
-					return (1);
+					return (main());
 				}
 				if (access(args[0], X_OK) != 0) /* finds if file is excutable */
 				{
