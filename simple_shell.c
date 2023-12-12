@@ -70,7 +70,7 @@ int main ()
 				else
 				{
 					args = get_tokens(str_line); /* makes tokens and args array with mallocs */
-					if (args[0] == NULL) /* if args was null maybe white spaces only */
+					if (args[0] == NULL) /* if args was null, maybe white spaces only */
 					{
 						free(str_line);
 						free(args);
