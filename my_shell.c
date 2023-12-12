@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "main.h"
+#include "my_exe.h"
 
 extern char **environ;
 
@@ -50,57 +51,46 @@ int main ()
 				{
 					args = get_tokens(str_line); /* makes tokens and args array with mallocs */
 
-					if (access(args[0], X_OK) != 0) /* finds if file is excutable */
-						printf("-bash: %s: command not found\n",args[0]);
-					else
+					if (args != NULL)
 					{
-						for (i = 0; path[i] != NULL; i++) /*iterate through path and concatenate with args[0]*/
+						if (access(args[0], X_OK) == 0)
+							my_exe(args, environ);
+						else
 						{
-							char *full_path = malloc(strlen(path[i]) + strlen(args[0]) + 2); /* allocate memory */
+							for (i = 0; i < 5; i++) /*iterate through path and concatenate with args[0]*/
+							{
+								char *full_path = malloc(strlen(path[i]) + strlen(args[0]) + 1); /* allocate memory */
 
-							if (full_path == NULL) /* verify if malloc is succesful */
-							{
-								perror("Memory allocation error");
-								exit(EXIT_FAILURE);
+								if (full_path == NULL) /* verify if malloc is succesful */
+								{
+									perror("Memory allocation error");
+									exit(EXIT_FAILURE);
+								}
+
+								strcpy(full_path, path[i]);
+								strcat(full_path, args[0]);
+
+								if (access(full_path, X_OK) == 0) /* verify if path is executable */
+								{
+									free(args[0]);
+									args[0] = strdup(full_path);
+
+									my_exe(args, environ);
+									free(full_path);
+									break;
+								}
+								free(full_path); /* free memory for constructed path */
 							}
-							if (access(full_path, X_OK) == 0) /* verify if path is executable */
-							{
-								my_exe(args, environ);
-								free(full_path); /* execute command with full path */
-								args[0] = full_path;
-								break;
-							}
-							free(full_path); /* free memory for constructed path */
 						}
 					}
+					if (access(args[0], X_OK) != 0)
+						printf("-bash: %s: command not found\n", args[0]);
+					for (i = 0; args[i] != NULL; i++) /* free the array and indxs */
+						free(args[i]);
+					free(args);
 				}
-				else /* function call for fork */
-				{
-					pid_t pid;
-					pid = fork();
-
-					if (pid == -1)/* child wasn't process and it couldn't work */
-					{
-						perror("fork");
-						exit(EXIT_FAILURE);
-					}
-					if (pid == 0)/* child process is the current process in work */
-					{
-						execve(args[0], args, environ);
-						perror("execve");
-						exit(EXIT_FAILURE);
-					}
-					else
-					{
-						wait(NULL);/* parent process suspended until the child finishes */
-					}
-				}
-
-				for (i = 0; args[i] != NULL; i++) /* free the array and indxs */
-					free(args[i]);
-				free(args);
 			}
 		}
-free(str_line);/* always free the str_line form stdin */
-return (0);
+	free(str_line);/* always free the str_line form stdin */
+	return (0);
 }
