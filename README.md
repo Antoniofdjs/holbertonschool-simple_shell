@@ -9,3 +9,13 @@
 - [Examples] (#examples)
 - [Resources] (#resources)
 - [Credits] (#credits)
+
+## Decription
+
+
+
+## Files
+
+`README.md` - Contains a decription of the project
+`main.h` - Contains the header and prototypes
+
