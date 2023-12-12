@@ -41,6 +41,17 @@ int main ()
 		}
 	}
 	else /* interactive mode */
+				if (access(args[0], X_OK) != 0) /* finds if file is excutable */
+					printf("-bash: %s: command not found\n", args[0]);
+				else
+					my_exe(args, environ);
+			}
+			free_args(args);
+		}
+	}
+
+	else /* interactive mode */
+	{
 		while (on != 0)
 		{
 			printf("($) ");
@@ -74,10 +85,13 @@ int main ()
 					}
 					if (access(args[0], X_OK) != 0)
 						printf("-bash: %s: command not found\n", args[0]);
+					else
+						my_exe(args, environ);
 					free_args(args);
 				}
 			}
 		}
+	}
 	free(str_line);/* always free the str_line form stdin */
 	return (0);
 }
