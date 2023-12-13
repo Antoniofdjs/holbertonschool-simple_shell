@@ -1,7 +1,7 @@
 #include "main.h"
 #include <stdio.h>
 /**
- * my_exe - function for fork proccess
+ * my_exe - function that creates forks and executes
  * @args: array from get_tokens
  * @environ: global variable of system.
  */
@@ -9,6 +9,7 @@
 void my_exe(char **args, char **environ)
 {
 	pid_t pid;
+
 	pid = fork();
 
 	if (pid == -1)/* child wasn't process and it couldn't work */
