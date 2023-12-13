@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include "main.h"
 /**
- * remove_newline - removes new line.
- * @str_line: 
+ * remove_newline - remove new line from str_line
+ * @str_line: string from main, stdin
  * @read_bytes: total chars read for str_line
  */
 
