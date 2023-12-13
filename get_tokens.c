@@ -1,8 +1,9 @@
 #include "main.h"
 #include <stdio.h>
 /**
- * get_tokens - gets tokens for array
- * @str_line: string used to duplicate and allocate in array
+ * get_tokens - tokenizes str_line, stores it in array
+ * @str_line: string from main, from stdin
+ * Return: pointer of array
  */
 
 char **get_tokens(char *str_line)
@@ -10,7 +11,7 @@ char **get_tokens(char *str_line)
 	char **array;
 	int tok_count = 0;
 	char *token, *str_line_dup;
-	
+
 	str_line_dup = strdup(str_line);/* we need dup to count tokens */
 	token = strtok(str_line_dup, " ");
 
@@ -26,7 +27,7 @@ char **get_tokens(char *str_line)
 	if (array == NULL)
 		return (NULL);
 
-	token = strtok(str_line, " ");
+	token = strtok(str_line, " "); /* original str to tokenize */
 	tok_count = 0;
 
 	while (token != NULL)
