@@ -9,19 +9,22 @@
 
 void get_path(char **args, char **environ)
 {
-	char path[][30] = {"/usr/local/bin/", "/usr/bin/", "/bin/", "/usr/local/games/", "/usr/games/"};
+	char path[][30] = {"/usr/local/bin/", /* all possible paths */
+		"/usr/bin/",
+		"/bin/",
+		"/usr/local/games/",
+		"/usr/games/"};
 	int i;
 
-	for (i = 0; i < 5; i++) /*iterate through path and concatenate with args[0]*/
+	for (i = 0; i < 5; i++) /*iterate path and concatenate with args[0]*/
 	{
-		char *full_path = malloc(strlen(path[i]) + strlen(args[0]) + 1); /* allocate memory */
+		char *full_path = malloc(strlen(path[i]) + strlen(args[0]) + 1);
 
 		if (full_path == NULL) /* verify if malloc is succesful */
 		{
 			perror("Memory allocation error");
 			exit(EXIT_FAILURE);
 		}
-
 		strcpy(full_path, path[i]);
 		strcat(full_path, args[0]);
 
@@ -34,6 +37,6 @@ void get_path(char **args, char **environ)
 			free(full_path);
 			break;
 		}
-		free(full_path); /* free memory for constructed path */
+		free(full_path); /* done the full path, args[0] has full now */
 	}
 }
