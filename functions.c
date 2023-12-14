@@ -2,50 +2,6 @@
 #include <stdio.h>
 
 /**
- * env_path - gets PATH form environ and makes array of paths
- * @environ: enviromental var from system
- * Return: pointer of array for paths
- */
-
-char **env_path(char **environ)
-{
-	int i, j = 0, token_count = 0;
-	char *path, *token, *path_dup;
-	char **env_path;
-
-	for (i = 0; environ[i] != NULL; i++)
-	{
-		if (strstr(environ[i], "PATH=") == environ[i])
-		{
-			path = strdup(environ[i]);
-			path_dup = strdup(path);
-			token = strtok(path_dup, ":");
-			while (token != NULL)
-			{
-				token_count++;
-				token = strtok(NULL, ":");
-			}
-			free(path_dup);
-			env_path = malloc((token_count + 1) * sizeof(char *));
-			token = strtok(path, ":");
-			while (token != NULL)
-			{
-				/* Allocate memory for the token and '/' */
-				env_path[j] = malloc(strlen(token) + 2);
-				strcpy(env_path[j], token);
-				strcat(env_path[j], "/"); /* Add '/' at the end */
-				j++;
-				token = strtok(NULL, ":");
-			}
-
-			env_path[j] = NULL;
-		}
-	}
-	free(path);
-	return (env_path);
-}
-
-/**
  * get_tokens - tokenizes str_line, stores it in array
  * @str_line: string from main, from stdin
  * Return: pointer of array
@@ -86,21 +42,23 @@ char **get_tokens(char *str_line)
 }
 
 /**
- * get_path - Concat args[0] with possible paths
+ * get_path - pairs args[0] with possible paths
  * @args : array from tokenization of get_tokens of str_line
  * @environ : golbal variable from system
  */
 
 void get_path(char **args, char **environ)
 {
-	char **path;
-	char *full_path;
-	int i, did_path = 0;
+	char path[][30] = {"/usr/local/bin/", /* all possible paths */
+		"/usr/bin/",
+		"/bin/",
+		"/usr/local/games/",
+		"/usr/games/"};
+	int i;
 
-	path = env_path(environ);
-	for (i = 0; path[i] != NULL; i++) /*iterate path and concat args[0]*/
+	for (i = 0; i < 5; i++) /*iterate path and concatenate with args[0]*/
 	{
-		full_path = malloc(strlen(path[i]) + strlen(args[0]) + 1);
+		char *full_path = malloc(strlen(path[i]) + strlen(args[0]) + 1);
 
 		if (full_path == NULL) /* verify if malloc is succesful */
 		{
@@ -109,21 +67,18 @@ void get_path(char **args, char **environ)
 		}
 		strcpy(full_path, path[i]);
 		strcat(full_path, args[0]);
+
 		if (access(full_path, X_OK) == 0) /* verify if path is executable */
 		{
 			free(args[0]);
 			args[0] = strdup(full_path);
+
 			my_exe(args, environ);
 			free(full_path);
-			free_array(path);
-			did_path = 1;
 			break;
 		}
 		free(full_path); /* done the full path, args[0] has full now */
-
 	}
-	if (did_path == 0)
-		free_array(path);
 }
 
 /**
