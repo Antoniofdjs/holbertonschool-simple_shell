@@ -26,7 +26,7 @@ int white_spaces(char **args, char *str_line)
  * @args : array from get tokens, tokenization of str_line
  */
 
-void free_args(char **args)
+void free_array(char **args)
 {
         int i = 0;
 
