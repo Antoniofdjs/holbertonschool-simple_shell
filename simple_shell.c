@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include "main.h"
 
+/**
+ * main - simple system shell
+ * Return: 0 on succes
+ */
 
 int main(void)
 {
@@ -10,35 +14,35 @@ int main(void)
 	int on = 1;
 	char **args;
 
+	while (on != 0)
 	{
-		while (on != 0)
+		if (isatty(fileno(stdin)))
+			printf("($) ");
+		read_bytes = getline(&str_line, &len, stdin); /* stdin into str_line */
+
+		if (read_bytes == -1) /* check if getline is succesfull */
 		{
 			if (isatty(fileno(stdin)))
-				printf("$ ");
-			read_bytes = getline(&str_line, &len, stdin); /* stdin into str_line */
-
-			if (read_bytes == -1) /* check if getline is succesfull */
+				printf("\n");
+			on = 0;
+		}
+		else
+		{
+			remove_newline(&str_line, &read_bytes);
+			if (strcmp(str_line, "exit") == 0) /* check if user put Exit */
 				on = 0;
 			else
 			{
-				remove_newline(&str_line, &read_bytes);
-				if (strcmp(str_line, "exit") == 0) /* check if user put Exit */
-					on = 0;
+				args = get_tokens(str_line); /* makes tokens and args array with mallocs */
+				if ((white_spaces(args, str_line)) == 0) /* if white spaces only */
+					return (main());
+				if (access(args[0], X_OK) == 0) /*!args */
+					my_exe(args, environ);
 				else
-				{
-					args = get_tokens(str_line); /* makes tokens, args */
-					if (args[0] == NULL) /* if args was null, maybe white spaces only */
-					{
-						free(str_line);
-						free(args);
-						return (main());
-					}
-					if (access(args[0], X_OK) != 0) /* finds if file is excutable */
-						printf("-bash: %s: command not found\n", args[0]);
-					else
-						my_exe(args, environ);
-					free_args(args);
-				}
+					get_path(args, environ); /*!args */
+				if (access(args[0], X_OK) != 0)
+					printf("-bash: %s: command not found\n", args[0]);
+				free_args(args);
 			}
 		}
 	}
