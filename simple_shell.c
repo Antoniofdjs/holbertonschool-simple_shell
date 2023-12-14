@@ -42,7 +42,7 @@ int main(void)
 					get_path(args, environ); /*!args */
 				if (access(args[0], X_OK) != 0)
 					printf("-bash: %s: command not found\n", args[0]);
-				free_args(args);
+				free_array(args);
 			}
 		}
 	}
