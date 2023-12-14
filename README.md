@@ -18,15 +18,16 @@ This was a simple recreation of a Unix command interpreter, capable of running b
 ## Files
 
 - `README.md` - Contains a decription of the project.
-- `main.h` - Contains the header and prototypes.
-- `free_args.c` - Contains function to free array args from main.
-- `get_tokens.c` - Contains functions to tokenize args.
-- `my_exec.c` - Contains functions that forks and sends data to execve.
-- `remove_newline.c`- Contains function to remove new line and reduces array.
+- `AUTHORS` - Contains the programs creators.
+- `functions` - Contains our `get_tokens`, `get_path`and `my_exe` functions. 
+- `main.h` - Contains the header and function prototypes.
 - `simple_shell.c` - Our running shell program.
+- `small_help_functions.c` - Contains out `white_spaces`, `free_array` and `remove_newline` functions.
 
 ## Commands
 
+  ### Some of the commands our shell can run:
+  
 - ls (-a, -l, -r and others) - list files in the current directory
 - pwd - prints the current working directory
 - rm (-r)- delete files
@@ -62,21 +63,27 @@ juancalpz23@penguin:~/holbertonschool-simple_shell$ ls
 get_path.c  main.h    README.md         simple_shell    stest
 hsh         my_exe.c  remove_newline.c  simple_shell.c  tokens_to_args.c
 juancalpz23@penguin:~/holbertonschool-simple_shell$ ./hsh
-($) ls
+($) /bin/ls
 get_path.c  main.h    README.md         simple_shell    stest
 hsh         my_exe.c  remove_newline.c  simple_shell.c  tokens_to_args.c
 ($)exit
 juancalpz23@penguin:~/holbertonschool-simple_shell$
 ```
 ```
-juancalpz23@penguin:~/holbertonschool-simple_shell$ echo "pwd" | ./hsh
+juancalpz23@penguin:~/holbertonschool-simple_shell$ pwd
 /home/juancalpz23/holbertonschool-simple_shell
-juancalpz23@penguin:~/holbertonschool-simple_shell$ 
-```
-```
 juancalpz23@penguin:~/holbertonschool-simple_shell$ ./hsh
 ($) pwd
 /home/juancalpz23/holbertonschool-simple_shell
+($)exit
+juancalpz23@penguin:~/holbertonschool-simple_shell$
+```
+```
+juancalpz23@penguin:~/holbertonschool-simple_shell$ pwd
+/home/juancalpz23/holbertonschool-simple_shell
+juancalpz23@penguin:~/holbertonschool-simple_shell$ echo "pwd" | ./hsh
+/home/juancalpz23/holbertonschool-simple_shell
+juancalpz23@penguin:~/holbertonschool-simple_shell$ 
 ```
 
 ## Resources
