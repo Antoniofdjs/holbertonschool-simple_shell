@@ -6,9 +6,11 @@
  * @args: array of arguments from get_tokens
  */
 
-void error(char **args)
+void error(char **args, char *str_line)
 {
 	fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
+	free(str_line);
+	free_array(args);
 	exit(127);
 }
 
@@ -53,7 +55,7 @@ int main(void)
 				else
 					get_path(args, environ); /*!args */
 				if (access(args[0], X_OK) != 0)
-					error(args);
+					error(args, str_line);
 				free_array(args);
 			}
 		}
