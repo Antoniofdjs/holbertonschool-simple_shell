@@ -2,7 +2,7 @@
 #include "main.h"
 
 /**
- * main - simple system shell
+ * main - Simple System Shell (sh)
  * Return: 0 on succes
  */
 
