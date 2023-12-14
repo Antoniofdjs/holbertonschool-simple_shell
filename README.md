@@ -36,7 +36,7 @@ This was a simple recreation of a Unix command interpreter, capable of running b
 - mv - move or rename a file
 - touch - create a file
 - cat - prints a files content
-- chmod - change
+- chmod - change a files properties (read, write or execute permissions)
 
 ## Use 
 
