@@ -9,7 +9,7 @@
 void error(char **args)
 {
 	fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
-	exit(197);
+	exit(127);
 }
 
 
