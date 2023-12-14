@@ -2,6 +2,18 @@
 #include "main.h"
 
 /**
+ * error- found not excectubale command
+ * @args: array of arguments from get_tokens
+ */
+
+void error(char **args)
+{
+	fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
+	exit(197);
+}
+
+
+/**
  * main - Simple System Shell (sh)
  * Return: 0 on succes
  */
@@ -41,7 +53,7 @@ int main(void)
 				else
 					get_path(args, environ); /*!args */
 				if (access(args[0], X_OK) != 0)
-					printf("-bash: %s: command not found\n", args[0]);
+					error(args);
 				free_array(args);
 			}
 		}
