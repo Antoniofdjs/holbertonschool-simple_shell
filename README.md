@@ -39,7 +39,13 @@ This was a simple recreation of a Unix command interpreter, capable of running b
 - chmod - change a files properties (read, write or execute permissions)
 
 ## Use 
+To compile, first have all files in the same directory.
 
+The compilation used for this was:
+
+```
+gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
+```
 In the terminal:
 
 ```
