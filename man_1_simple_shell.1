@@ -1,0 +1,144 @@
+.TH SIMPLE_SHELL 1 "December 2023" "Version 1.0"  "Simple Shell User Manual"
+
+.SH NAME
+simple_shell \- a basic Unix shell
+
+.SH SYNOPSIS
+.B simple_shell
+[\fIOPTION\fR]... [\fICOMMAND\fR]...
+
+
+.SH DESCRIPTION
+.B simple_shell
+is a basic Unix shell that allows users to interact with the system
+through a command-line interface. It supports executing commands, simple pipelines,
+and basic shell operations.
+
+.SH OPTIONS
+.TP
+.B \-h, \-\-help
+Display this help message and exit.
+
+.TP
+.B \-v, \-\-version
+Display version information and exit.
+
+.SH COMMANDS
+.TP
+.B command [arguments...]
+Execute the specified command with optional arguments.
+
+.TP
+.B pipeline
+Execute a pipeline of commands, connecting the output of one to the input of
+the next.
+
+.TP
+.B exit [status]
+Exit the shell with an optional status code.
+
+.TP
+.B ls [options] [directory]
+List files and directories in the specified directory. If no directory is
+provided, list the contents of the current directory.
+
+.TP
+.B cp [options] source destination
+Copy files or directories from source to destination.
+
+.TP
+.B mv [options] source destination
+Move (rename) files or directories from source to destination.
+
+.TP
+.B rm [options] file...
+Remove (delete) files or directories.
+
+.TP
+.B mkdir [options] directory...
+Create directories with the specified names.
+
+.TP
+.B touch [options] file...
+Creates an empty file.
+
+.TP
+.B clear
+Removes all text and previous commands from the terminal, giving you a blank screen.
+
+.TP
+.B less [options] file...
+Views text files, allowing you to navigate through the file, search for specific content, and perform various operations.
+
+.TP
+.B man
+Display the manual pages for commands, utilities, and other system-related information.
+
+.TP
+.B cat [options] file...
+Display the contents of one or more files.
+
+.TP
+.B grep [options] pattern [file...]
+Search for a pattern in one or more files.
+
+.TP
+.B ps [options]
+Display information about active processes.
+
+.TP
+.B kill [options] pid
+Send a signal to a process.
+
+.TP
+.B echo [options] [string...]
+Display a message or variable.
+
+.TP
+.B chmod [options] mode file...
+Change file permissions.
+
+.TP
+.B chown [options] owner:group file...
+Change file owner and group.
+
+.SH EXAMPLES
+.TP
+To run a command:
+.B simple_shell command arg1 arg2
+
+.TP
+To create a pipeline:
+.B simple_shell command1 | command2
+
+.TP
+To change the current working directory:
+.B simple_shell cd /path/to/directory
+
+.TP
+To list files in a directory:
+.B simple_shell ls /path/to/directory
+
+.TP
+To copy a file:
+.B simple_shell cp file.txt /path/to/destination
+
+.TP
+To remove a file:
+.B simple_shell rm file.txt
+
+...
+
+.SH AUTHORS
+Antonio De Jesus, Juan C. Lopez, and Livan Hernandez.
+
+.SH SEE ALSO
+.BR execve(2),
+.BR wait(2),
+.BR fork(2),
+.BR access(2),
+.BR getline(2).
+
+.SH COPYRIGHT
+Copyright © 2023 Livan Hernandez. This is free software: you are free to change and
+redistribute it. There is NO WARRANTY, to the extent permitted by law.
