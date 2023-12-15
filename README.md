@@ -19,10 +19,10 @@ This was a simple recreation of a Unix command interpreter, capable of running b
 
 - `README.md` - Contains a decription of the project.
 - `AUTHORS` - Contains the programs creators.
-- `functions` - Contains our `get_tokens`, `get_path`and `my_exe` functions. 
+- `functions` - Contains `get_tokens`, `get_path`and `my_exe` functions. 
 - `main.h` - Contains the header and function prototypes.
 - `simple_shell.c` - Our running shell program.
-- `small_help_functions.c` - Contains out `white_spaces`, `free_array` and `remove_newline` functions.
+- `small_help_functions.c` - Contains `white_spaces`, `free_array` and `remove_newline` functions.
 
 ## Commands
 
